@@ -1,0 +1,80 @@
+buildscript {
+    ext {
+        // 定义变量
+        springBootVersion = '2.3.3.RELEASE'
+        springCloudVersion = 'Hoxton.SR7'
+        springCloudAlibabaVersion = '2.2.1.RELEASE'
+        mybatisPlusSpringBootVersion = '3.0.5'
+        dataSourcesVersion = '3.0.0'
+        swagger2Version = '2.10.5'
+        junitVersion = '4.12'
+        log4jVersion = '1.2.17'
+        lombokVersion = '1.18.8'
+        mysqlVersion = '8.0.20'
+        mariadbVersion = '2.7.1'
+        druidVersion = '1.2.4'
+        aliJsonVersion = '1.2.58'
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+    }
+}
+
+plugins {
+    id 'java'
+}
+
+
+
+
+// 统一配置java插件、版本、公共属性：group、version（父模块也需要）
+allprojects {
+    group 'com.webflux.demo'
+    version '1.0.0'
+
+    //项目是java项目
+    apply plugin: 'java'
+
+    sourceCompatibility = 1.14
+}
+
+// 配置子模块共用仓库、依赖jar
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+
+    sourceCompatibility = 1.14
+    targetCompatibility = 1.14
+
+
+    repositories {
+        mavenLocal()
+        maven { name "Alibaba" ; url "https://maven.aliyun.com/repository/public" }
+        maven { name "Bstek" ; url "http://nexus.bsdn.org/content/groups/public/" }
+        mavenCentral()
+    }
+
+    dependencies {
+        // springwebflux依赖
+        implementation("org.springframework.boot:spring-boot-starter-webflux:${springBootVersion}")
+
+
+
+        // swagger文档依赖
+        implementation("io.springfox:springfox-swagger2:${swagger2Version}")
+        implementation("io.springfox:springfox-swagger-ui:${swagger2Version}")
+        implementation("io.springfox:springfox-spring-webflux:${swagger2Version}")
+
+        // 代码简化依赖
+        implementation("org.projectlombok:lombok:${lombokVersion}")
+
+        // alijson优化
+        implementation("com.alibaba:fastjson:${aliJsonVersion}")
+
+        testCompile group: 'junit', name: 'junit', version: '4.12'
+    }
+}
+
+
+
