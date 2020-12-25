@@ -1,5 +1,6 @@
-package com.webflux.crud.demo.config;
+package com.webflux.crud.demo.webflux.router;
 
+import com.webflux.crud.demo.webflux.handle.TestHandle;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.MediaType;
